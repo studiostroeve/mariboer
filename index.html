@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mari Boer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="logo">
+            Mari Boer
+        </div>
+        <div class="links">
+            <a href="index.html" class="link">
+                Home
+            </a>
+            <a href="contact.html" class="link">
+                Contact
+            </a>
+        </div>
+    </div>
+    <div class="main">
+        <div class="info-container">
+            <div class="info">
+                <div class="info-column">
+                    <img id="kunst-image" src="images/mb-kunst.png" alt="Kunstwerken">
+                    <h1>Cursus Kunstgeschiedenis</h1>
+                    <p>&nbsp;</p>
+                    <p><strong>Inhoud van de cursus</strong></p>
+                    <p>Onderwerpen of thema’s: een kunststroming, een onderwerp, een kunstenaar, een actuele
+                        tentoonstelling. Meestal binnen één bijeenkomst afgerond. Over de kunstgeschiedenis, maar ook
+                        over de kunstbeschouwing: hóe kijk je naar kunst, naar het gebruik van kleur, vorm, materiaal,
+                        licht en ruimte.&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p><strong>Locatie</strong></p>
+                    <p>Praubstraat 21</p>
+                    <p>Zwolle Centrum</p>
+                    <p>&nbsp;</p>
+                    <p><strong>Tijden</strong></p>
+                    <p>Dinsdagochtend van 10u tot 12u.</p>
+                    <p>Dinsdagmiddag van 14:30u tot 16:30u.</p>
+                    <p>(Er zijn plannen voor een avondgroep, maar nog niet genoeg deelnemers.)</p>
+                    <p>&nbsp;</p>
+                    <p><strong>Kosten</strong></p>
+                    <p>Per keer 15,- euro. De eerste keer gratis, om de sfeer te proeven. Er is koffie en thee. Een keer
+                        een bijeenkomst overslaan is prima.</p>
+                    <p>&nbsp;</p>
+                    <p><strong>Algemene informatie</strong></p>
+                    <p>Ik heb een groot beeldscherm en maak gebruik van PowerPoint, het atelier is groot genoeg voor
+                        max. 12 personen, prettig van sfeer, met goede stoelen. (Wel twee trappen op).</p>
+                    <p>De groepen lopen inhoudelijk synchroon, zodat deelnemers dan de mogelijkheid hebben om een keer
+                        op een ander dagdeel te komen.</p>
+                    <p>In vakanties slaan we die keren over, in overleg met elkaar.</p>
+                    <p>De eerste groep is gestart in 2012.</p>
+                </div>
+                <div class="info-column">
+                    <img id="portret-image" src="images/mb-portret.jpg" alt="Portret">
+                    <p><strong>Over mij</strong></p>
+                    <p>Ik heb kunstacademie gedaan (afdeling schilderen, afgestudeerd in 1992) en de eerstegraads lerarenopleiding (afgestudeerd in 2001). Ik teken en schilder, en werk de laatste paar jaar met name aan een beeldverhaal.</p>
+                    <p>De bijeenkomsten zijn inhoudelijk goed en gedegen (als ik dat zelf zo mag zeggen...), maar evenzo houd ik ervan om e.e.a. met humor ook wat luchtigheid te geven. De sfeer in elk van de groepen is heel goed, gezellig ook.</p>
+                    <p>Ik hoor vaak van deelnemers dat ze door de cursus niet alleen meer over kunst te weten komen, maar ook met een andere blik in musea rondlopen, en: sowieso anders om zich heen gaan kijken. Dat laatste vind ik eigenlijk het mooist…</p>
+                    <p>&nbsp;</p>
+                    <p>Vriendelijke groet,</p>
+                    <p>Mari Boer</p>
+                </div>
+            </div>
+        </div>
+        <div class="content-container">
+
+            <div class="content-bg">
+                <div class="content-subcontainer">
+                    <div class="content-item-container">
+                        <div class="content-item" style="display: grid; justify-content: center;">
+                            <h2 style="font-size: 24pt;">Voorgaande bijeenkomsten</h2>
+                        </div>
+                    </div>
+                    <div id="content">
+                        <div class="content-loading">
+                            Aan het laden...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+        async function fetchData() {
+            const sheetID = "19ctDrINR9kQEI9I1GLXJYly23K7q7y6ZbuXM2jLkyqk"; // Get from the published URL
+            const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
+
+            try {
+                const response = await fetch(url);
+                const text = await response.text();
+                const json = JSON.parse(text.substring(47, text.length - 2));
+                let output = "";
+
+
+                json.table.rows.slice(1).forEach(row => {
+                    let rawDate = row.c[2]?.v; // Assuming column 2 contains the date
+                    let formattedDate = "";
+
+                    if (rawDate && rawDate.startsWith("Date(")) {
+                        // Extract the numbers from Date(YYYY, M, D)
+                        let dateParts = rawDate.match(/\d+/g); // Extracts [YYYY, M, D]
+                        if (dateParts) {
+                            let year = parseInt(dateParts[0]);
+                            let month = parseInt(dateParts[1]); // This is 0-based
+                            let day = parseInt(dateParts[2]);
+
+                            // Create a correct Date object
+                            let dateObj = new Date(year, month, day);
+
+                            formattedDate = dateObj.toLocaleDateString("nl-NL", {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric"
+                            });
+                        }
+                    }
+
+                    output += `<div class="content-item-container">
+        <div class="content-item">
+            <h2>${row.c[0]?.v || ''}</h2>
+            <p>${row.c[1]?.v || ''}</p>
+            <p class="datum">${formattedDate}</p>
+        </div>
+    </div>`;
+                });
+
+
+
+
+                document.getElementById("content").innerHTML = output;
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        }
+
+        window.onload = fetchData;
+    </script>
+</body>
+
+</html>
