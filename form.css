@@ -50,6 +50,8 @@ body {
     display: grid;
     justify-items: center;
     align-items: center;
+    height: auto;
+    max-width: 100vw;
 }
 
 .form-main {
@@ -57,6 +59,8 @@ body {
     height: 850px;
     justify-items: center;
     align-items: center;
+    height: 100%;
+    max-width: 100vw;
 }
 
 button,
@@ -73,6 +77,8 @@ textarea {
     color: inherit;
     margin: 0;
     padding: 0;
+    box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
 }
 
 [type="checkbox"],
@@ -160,6 +166,8 @@ fieldset {
 
 .fs-button:hover {
     background-color: var(--color-primary-active);
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
 }
 
 .fs-button:focus-visible {
@@ -172,7 +180,7 @@ fieldset {
     appearance: none;
     border-radius: 9999px;
     border-width: 0;
-    box-shadow: var(--color-border-default) 0 0 0 1px inset;
+    box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.3);
     color: var(--color-text-default);
     font-size: 1rem;
     height: 3rem;
@@ -180,11 +188,13 @@ fieldset {
     outline: none;
     padding-left: 1rem;
     padding-right: 1rem;
+    transition: all 0.3s ease;
 }
 
 .fs-input:focus-visible,
 .fs-select:focus-visible {
-    box-shadow: var(--color-border-active) 0 0 0 1px inset;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
 }
 
 .fs-input::placeholder {
@@ -352,19 +362,27 @@ fieldset {
     appearance: none;
     border-radius: 0.75rem;
     border-width: 0;
-    box-shadow: var(--color-border-default) 0 0 0 1px inset;
+    box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.3);
     color: var(--color-text-default);
     font-size: 1rem;
     line-height: 1.5rem;
     outline: none;
     padding: 0.5rem 0.75rem;
     resize: vertical;
+    transition: all 0.3s ease;
 }
 
 .fs-textarea:focus-visible {
-    box-shadow: var(--color-border-active) 0 0 0 1px inset;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
 }
 
 .fs-textarea::placeholder {
     color: var(--color-text-muted);
+}
+
+@media (max-width: 1100px) {
+    .form-main-container{
+        margin: 0px;
+    }
 }

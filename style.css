@@ -182,6 +182,7 @@ body {
     margin: 4px;
     right: 0;
     bottom: 0;
+    filter: grayscale();
 }
 
 @media (max-width: 1000px) {
