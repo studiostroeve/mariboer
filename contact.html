@@ -7,6 +7,7 @@
     <title>Mari Boer</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="form.css">
+    <link rel="icon" type="image/x-icon" href="/images/mari_favicon64.png">
 </head>
 
 <body>
@@ -28,80 +29,55 @@
             <div class="form-title">
                 Contactformulier
             </div>
-            <form action="https://formspree.io/f/xjkyebjn" class="fs-form" target="_top" method="POST">
-                <div class="fs-field">
-                    <label class="fs-label" for="name">Uw naam</label>
-                    <input class="fs-input" id="name" name="name" required />
+            <!-- 
+    This is a working contact form. To receive email, 
+    Replace YOUR_ACCESS_KEY_HERE with your actual Access Key.
+
+    Create Access Key here 👉 https://web3forms.com/
+ -->
+
+            <section class="contact-section">
+                <div class="contact-intro">
+                    <p class="contact-description">
+                        Vul het onderstaande formulier in en ik zal u zo snel mogelijk beantwoorden.
+                    </p>
                 </div>
-                <div class="fs-field">
-                    <label class="fs-label" for="email">Emailadres</label>
-                    <input class="fs-input" id="email" name="email" required />
-                </div>
-                <div class="fs-field">
-                    <label class="fs-label" for="message">Bericht</label>
-                    <textarea class="fs-textarea" id="message" name="message" required></textarea>
-                </div>
-                <div class="fs-button-group">
-                    <button class="fs-button" type="submit">Verstuur</button>
-                </div>
-            </form>
+
+                <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+
+                    <input type="hidden" name="access_key" value="e207a2b9-7c00-4e81-9721-44fad9524d48" />
+                    <input type="hidden" name="subject" value="Contactformulier ingevuld" />
+                    <input type="hidden" name="from_name" value="Contactformulier Mari Boer website" />
+                    <!-- More customization options available in the docs: https://docs.web3forms.com -->
+
+                    <div class="form-group-container">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Naam</label>
+                            <input id="name" name="name" class="form-input" placeholder="Uw naam" type="text" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">Emailadres</label>
+                            <input id="email" name="email" class="form-input" placeholder="Uw emailadres"
+                                type="email" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="message" class="form-label">Bericht</label>
+                            <textarea class="form-textarea" id="message" name="message"
+                                placeholder="Uw bericht" required></textarea>
+                        </div>
+                    </div>
+                    <button class="form-submit" type="submit">Verstuur bericht</button>
+                </form>
+
+            </section>
         </div>
 
     </div>
     <script>
-        async function fetchData() {
-            const sheetID = "19ctDrINR9kQEI9I1GLXJYly23K7q7y6ZbuXM2jLkyqk"; // Get from the published URL
-            const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
-
-            try {
-                const response = await fetch(url);
-                const text = await response.text();
-                const json = JSON.parse(text.substring(47, text.length - 2));
-                let output = "";
-
-
-                json.table.rows.slice(1).forEach(row => {
-                    let rawDate = row.c[2]?.v; // Assuming column 2 contains the date
-                    let formattedDate = "";
-
-                    if (rawDate && rawDate.startsWith("Date(")) {
-                        // Extract the numbers from Date(YYYY, M, D)
-                        let dateParts = rawDate.match(/\d+/g); // Extracts [YYYY, M, D]
-                        if (dateParts) {
-                            let year = parseInt(dateParts[0]);
-                            let month = parseInt(dateParts[1]); // This is 0-based
-                            let day = parseInt(dateParts[2]);
-
-                            // Create a correct Date object
-                            let dateObj = new Date(year, month, day);
-
-                            formattedDate = dateObj.toLocaleDateString("nl-NL", {
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric"
-                            });
-                        }
-                    }
-
-                    output += `<div class="content-item-container">
-        <div class="content-item">
-            <h2>${row.c[0]?.v || ''}</h2>
-            <p>${row.c[1]?.v || ''}</p>
-            <p class="datum">${formattedDate}</p>
-        </div>
-    </div>`;
-                });
-
-
-
-
-                document.getElementById("content").innerHTML = output;
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        }
-
-        window.onload = fetchData;
+        window.onload = function() {
+            // Reset the form fields when the page loads
+            document.getElementById("contact-form").reset();
+        };
     </script>
 </body>
 

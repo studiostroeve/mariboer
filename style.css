@@ -109,7 +109,7 @@ body {
 
 .info-column {
     flex: 1;
-    height: 100%;
+    height: auto;
     width: 100%;
     margin: 16px;
     text-wrap: wrap;
@@ -175,14 +175,23 @@ body {
     margin: 2px;
 }
 
-#kunst-image {
+#image-spacer {
+    height: 350px;
+    width: 0px;
     float: right;
-    width: 165px;
+}
+
+#kunst-image {
+    position: relative;
+    display: grid;
+    float: right;
+    clear: right;
+    height: 160px;
     aspect-ratio: 1.562;
     margin: 4px;
-    right: 0;
     bottom: 0;
-    filter: grayscale();
+    top: auto;
+    bottom: 0;
 }
 
 @media (max-width: 1000px) {
@@ -213,11 +222,11 @@ body {
     }
 
     .logo {
-        font-size: 36pt;
+        font-size: 28pt;
     }
 
     .links {
-        font-size: 14pt;
+        font-size: 11pt;
 
     }
 }

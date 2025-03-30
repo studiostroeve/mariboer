@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mari Boer</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="/images/mari_favicon64.png">
 </head>
 
 <body>
@@ -26,6 +27,7 @@
         <div class="info-container">
             <div class="info">
                 <div class="info-column">
+                    <div id="image-spacer"></div>
                     <img id="kunst-image" src="images/mb-kunst.png" alt="Kunstwerken">
                     <h1>Cursus Kunstgeschiedenis</h1>
                     <p>&nbsp;</p>
@@ -59,9 +61,15 @@
                 <div class="info-column">
                     <img id="portret-image" src="images/mb-portret.jpg" alt="Portret">
                     <p><strong>Over mij</strong></p>
-                    <p>Ik heb kunstacademie gedaan (afdeling schilderen, afgestudeerd in 1992) en de eerstegraads lerarenopleiding (afgestudeerd in 2001). Ik teken en schilder, en werk de laatste paar jaar met name aan een beeldverhaal.</p>
-                    <p>De bijeenkomsten zijn inhoudelijk goed en gedegen (als ik dat zelf zo mag zeggen...), maar evenzo houd ik ervan om e.e.a. met humor ook wat luchtigheid te geven. De sfeer in elk van de groepen is heel goed, gezellig ook.</p>
-                    <p>Ik hoor vaak van deelnemers dat ze door de cursus niet alleen meer over kunst te weten komen, maar ook met een andere blik in musea rondlopen, en: sowieso anders om zich heen gaan kijken. Dat laatste vind ik eigenlijk het mooist…</p>
+                    <p>Ik heb kunstacademie gedaan (afdeling schilderen, afgestudeerd in 1992) en de eerstegraads
+                        lerarenopleiding (afgestudeerd in 2001). Ik teken en schilder, en werk de laatste paar jaar met
+                        name aan een beeldverhaal.</p>
+                    <p>De bijeenkomsten zijn inhoudelijk goed en gedegen (als ik dat zelf zo mag zeggen...), maar evenzo
+                        houd ik ervan om e.e.a. met humor ook wat luchtigheid te geven. De sfeer in elk van de groepen
+                        is heel goed, gezellig ook.</p>
+                    <p>Ik hoor vaak van deelnemers dat ze door de cursus niet alleen meer over kunst te weten komen,
+                        maar ook met een andere blik in musea rondlopen, en: sowieso anders om zich heen gaan kijken.
+                        Dat laatste vind ik eigenlijk het mooist…</p>
                     <p>&nbsp;</p>
                     <p>Vriendelijke groet,</p>
                     <p>Mari Boer</p>
@@ -92,7 +100,7 @@
 
     <script>
         async function fetchData() {
-            const sheetID = "19ctDrINR9kQEI9I1GLXJYly23K7q7y6ZbuXM2jLkyqk"; // Get from the published URL
+            const sheetID = "19ctDrINR9kQEI9I1GLXJYly23K7q7y6ZbuXM2jLkyqk"; // From the published URL
             const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
 
             try {
@@ -102,7 +110,7 @@
                 let output = "";
 
 
-                json.table.rows.slice(1).forEach(row => {
+                json.table.rows.slice(0).forEach(row => {
                     let rawDate = row.c[2]?.v; // Assuming column 2 contains the date
                     let formattedDate = "";
 
@@ -123,6 +131,9 @@
                                 day: "numeric"
                             });
                         }
+                    } else {
+                        console.warn("Row has no date and thus is not valid! Skipping this row!");
+                        return;
                     }
 
                     output += `<div class="content-item-container">
